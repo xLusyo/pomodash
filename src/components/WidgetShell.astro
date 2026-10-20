@@ -1,0 +1,45 @@
+---
+import Icon from './Icon.astro';
+import type { WidgetId } from '../lib/types';
+
+interface Props {
+  id: WidgetId;
+  title: string;
+  icon: 'timer' | 'list';
+}
+
+const { id, title, icon } = Astro.props;
+---
+
+<section
+  class:list={['widget', `widget-${id}`]}
+  data-widget={id}
+  aria-labelledby={`${id}-title`}
+  aria-describedby="canvas-instructions"
+  tabindex="0"
+  hidden={id !== 'timer'}
+>
+  <header class="widget-header">
+    <div class="widget-heading">
+      <span class="widget-symbol"><Icon name={icon} size={18} /></span>
+      <h2 id={`${id}-title`} tabindex="-1">{title}</h2>
+      <slot name="badge" />
+    </div>
+    <button type="button" class="icon-button" data-hide aria-label={`Hide ${title}`} title="Hide widget">
+      <Icon name="close" size={17} />
+    </button>
+  </header>
+  <slot />
+  <button
+    type="button"
+    class="resize-handle"
+    data-resize
+    aria-label={`Resize ${title}`}
+    aria-describedby="resize-instructions"
+    title="Drag to resize; arrow keys also resize"
+  >
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+      <path d="M4 12 12 4M9 12l3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+    </svg>
+  </button>
+</section>

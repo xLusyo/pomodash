@@ -1,0 +1,139 @@
+.widget {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: min(440px, calc((100% - 72px) / 2));
+    cursor: grab;
+    touch-action: none;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: 0 3px 6px #373a271f, 0 1px 2px #373a2705;
+    overflow: hidden;
+    min-width: 0;
+    transition: box-shadow 150ms, opacity 150ms, border-color 150ms;
+}
+
+.widget-header {
+    padding: 14px 17px 14px 23px;
+    min-height: 65px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    border-bottom: 1px solid #eeeee6;
+}
+
+.widget-heading {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.widget-heading h2 {
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.widget-symbol {
+    color: var(--accent);
+    display: inline-flex;
+}
+
+.widget-todos .widget-symbol {
+    color: var(--sage);
+}
+
+.widget-header > .icon-button {
+    width: 29px;
+    height: 32px;
+    color: #838779;
+}
+
+.widget.is-dragging {
+    cursor: grabbing;
+    border-color: var(--accent);
+    box-shadow: 0 12px 32px #30362f20;
+}
+
+body.is-dragging-widget {
+    user-select: none;
+    cursor: grabbing;
+}
+
+.count-badge {
+    background: #eef0e7;
+    padding: 3px 6px;
+    border-radius: 5px;
+    color: var(--sage);
+    font-size: 10px;
+}
+
+.resize-handle {
+    position: absolute;
+    right: 2px;
+    bottom: 2px;
+    width: 30px;
+    height: 30px;
+    display: grid;
+    place-items: center;
+    padding: 0;
+    border: 0;
+    border-radius: 5px 0 15px;
+    background: transparent;
+    color: var(--muted);
+    cursor: nwse-resize;
+    touch-action: none;
+}
+
+.resize-handle:hover,
+.widget.is-resizing .resize-handle {
+    background: var(--accent-soft);
+    color: var(--accent);
+}
+
+.widget.is-resizing {
+    border-color: var(--accent);
+}
+
+body.is-resizing-widget {
+    user-select: none;
+    cursor: nwse-resize;
+}
+
+.widget-header,
+.timer-footer,
+.todo-footer {
+    flex-shrink: 0;
+}
+
+@media (width <= 850px) {
+    .widget-header {
+        padding-left: 14px;
+        padding-right: 9px;
+    }
+
+    .widget-heading {
+        gap: 6px;
+    }
+}
+
+@media (pointer: coarse) {
+    .resize-handle {
+        width: 44px;
+        height: 44px;
+    }
+    .widget-header {
+        padding: 10px 9px 10px 15px;
+    }
+
+    .widget-header > .icon-button {
+        width: 44px;
+        height: 44px;
+    }
+
+    .widget-heading {
+        gap: 6px;
+    }
+}

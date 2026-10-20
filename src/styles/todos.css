@@ -1,0 +1,252 @@
+.widget-todos {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+.todo-body {
+    min-height: 0;
+    overflow: auto;
+    padding: 26px 25px 16px;
+    flex: 1;
+}
+
+.todo-body h3 {
+    font-size: 17px;
+    font-weight: 500;
+    font-family: 'Iowan Old Style', Georgia, serif;
+    letter-spacing: -.15px;
+}
+
+.todo-intro {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 8px;
+    line-height: 1.7;
+}
+
+.add-todo-form {
+    display: flex;
+    border: 1px solid var(--line);
+    background: #fafaf6;
+    border-radius: 9px;
+    align-items: center;
+    margin-top: 24px;
+    padding: 4px 6px 4px 13px;
+    gap: 5px;
+}
+
+.add-todo-form:focus-within {
+    border-color: var(--accent);
+}
+
+.add-todo-form input {
+    flex: 1;
+    width: 0;
+    padding: 9px 0;
+    background: transparent;
+    border: 0;
+    font-size: 12px;
+}
+
+.add-todo-form input:focus-visible {
+    outline: 0;
+}
+
+.add-todo-form button {
+    width: 31px;
+    height: 31px;
+    background: #e9ecdf;
+    color: #5f7052;
+    border-radius: 6px;
+}
+
+.todo-empty {
+    padding: 52px 0 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.empty-list-icon {
+    width: 44px;
+    height: 44px;
+    background: #f0f2e9;
+    color: #8b9b77;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    margin-bottom: 15px;
+}
+
+.todo-empty p {
+    font-size: 15px;
+    font-family: 'Iowan Old Style', Georgia, serif;
+}
+
+.todo-empty>span:last-child {
+    font-size: 11px;
+    line-height: 1.9;
+    color: var(--muted);
+    margin-top: 8px;
+}
+
+.todo-list {
+    margin: 14px 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.todo-item {
+    min-height: 57px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid #eeeee6;
+}
+
+.todo-item:last-child {
+    border-bottom: 0;
+}
+
+.todo-toggle {
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding: 7px 0;
+    cursor: pointer;
+}
+
+.todo-toggle input {
+    position: absolute;
+    opacity: 0;
+    width: 20px;
+    height: 20px;
+    margin: 0;
+}
+
+.todo-checkbox {
+    width: 18px;
+    height: 18px;
+    border: 1px solid #cdd2c1;
+    border-radius: 5px;
+    display: grid;
+    place-items: center;
+    color: transparent;
+}
+
+.todo-toggle input:checked+.todo-checkbox {
+    background: var(--sage);
+    border-color: var(--sage);
+    color: white;
+}
+
+.todo-toggle input:focus-visible+.todo-checkbox {
+    outline: 3px solid var(--accent);
+    outline-offset: 3px;
+}
+
+.todo-title {
+    font-size: 12px;
+    line-height: 1.7;
+    flex: 1;
+    overflow-wrap: anywhere;
+    padding: 10px 0;
+}
+
+.todo-item.is-complete .todo-title {
+    text-decoration: line-through;
+    color: var(--muted);
+}
+
+.todo-item-actions {
+    display: flex;
+}
+
+.todo-item-actions .icon-button {
+    width: 29px;
+    height: 34px;
+}
+
+.todo-footer {
+    min-height: 53px;
+    padding: 12px 48px 12px 25px;
+    border-top: 1px solid #eeeee6;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-size: 10px;
+    color: var(--muted);
+}
+
+.todo-progress-track {
+    width: 70px;
+    margin-left: auto;
+    height: 3px;
+    background: #eceee4;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.todo-progress-track>span {
+    display: block;
+    height: 100%;
+    background: var(--sage);
+    width: 0;
+    transition: width 150ms;
+}
+
+.edit-todo-form {
+    display: flex;
+    gap: 4px;
+    width: 100%;
+    align-items: center;
+}
+
+.edit-todo-form label {
+    min-width: 0;
+    flex: 1;
+}
+
+.edit-todo-form input {
+    width: 100%;
+    border: 1px solid #cdd2c1;
+    border-radius: 5px;
+    padding: 9px;
+    background: #fafaf6;
+    font-size: 12px;
+}
+
+.todo-item.is-editing>.todo-toggle,
+.todo-item.is-editing>.todo-title,
+.todo-item.is-editing>.todo-item-actions {
+    display: none;
+}
+
+@media (width <=1000px) {
+    .todo-body {
+        padding-inline: 18px;
+    }
+
+    .todo-item {
+        gap: 7px;
+    }
+}
+
+@media (pointer: coarse) {
+    .todo-toggle {
+        min-width: 32px;
+        min-height: 44px;
+    }
+
+    .todo-item-actions .icon-button {
+        width: 36px;
+        height: 44px;
+    }
+
+    .add-todo-form button {
+        width: 40px;
+        height: 40px;
+    }
+}

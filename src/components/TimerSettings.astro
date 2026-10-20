@@ -1,0 +1,51 @@
+---
+import Icon from './Icon.astro';
+---
+
+<dialog id="timer-settings" class="modal" aria-labelledby="settings-title">
+  <div class="modal-header">
+    <div>
+      <span class="eyebrow">MAKE IT YOURS</span>
+      <h2 id="settings-title">Your focus rhythm</h2>
+    </div>
+    <button class="icon-button" type="button" data-close-dialog aria-label="Close timer settings">
+      <Icon name="close" />
+    </button>
+  </div>
+  <p class="modal-description">Find the balance that works for you. Saving resets your current session.</p>
+
+  <form id="timer-settings-form">
+    <div class="duration-fields">
+      <label>
+        Focus
+        <span class="number-field">
+          <input type="number" name="focus" min="1" max="180" step="1" required value="25" />
+          <span>min</span>
+        </span>
+      </label>
+      <label>
+        Short break
+        <span class="number-field">
+          <input type="number" name="shortBreak" min="1" max="180" step="1" required value="5" />
+          <span>min</span>
+        </span>
+      </label>
+      <label>
+        Long break
+        <span class="number-field">
+          <input type="number" name="longBreak" min="1" max="180" step="1" required value="15" />
+          <span>min</span>
+        </span>
+      </label>
+    </div>
+
+    <div class="settings-note">
+      <Icon name="leaf" size={18} />
+      <span>A long break follows every four focus sessions.<br />You choose when the next session starts.</span>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="button button-secondary" data-close-dialog>Cancel</button>
+      <button type="submit" class="button button-primary">Save settings<Icon name="check" size={17} /></button>
+    </div>
+  </form>
+</dialog>

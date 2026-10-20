@@ -1,0 +1,191 @@
+.modal {
+    width: 510px;
+    padding: 29px;
+    background: var(--surface);
+    color: var(--ink);
+    border: 1px solid var(--line);
+    border-radius: 19px;
+    box-shadow: 0 24px 90px #252c2533;
+}
+
+.modal::backdrop {
+    background: #30392c44;
+    backdrop-filter: blur(4px);
+}
+
+.modal-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.modal-header .eyebrow {
+    font-size: 9px;
+    letter-spacing: 1.4px;
+}
+
+.modal-header h2 {
+    font-family: 'Iowan Old Style', Georgia, serif;
+    font-size: 30px;
+    font-weight: 400;
+    margin-top: 9px;
+    letter-spacing: -.5px;
+}
+
+.modal-header .icon-button {
+    margin: -7px -7px 0 0;
+}
+
+.modal-description {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.8;
+    margin-top: 14px;
+    margin-bottom: 25px;
+}
+
+.widget-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.widget-option {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    border: 1px solid var(--line);
+    border-radius: 11px;
+    padding: 17px 14px;
+    background: transparent;
+    text-align: left;
+}
+
+.widget-option:hover:not(:disabled) {
+    background: #f3f3ea;
+    border-color: #b4bd9f;
+}
+
+.widget-option:disabled {
+    opacity: .7;
+}
+
+.option-icon {
+    width: 47px;
+    height: 47px;
+    border-radius: 11px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    display: grid;
+    place-items: center;
+}
+
+.option-icon.sage {
+    background: #eaeedf;
+    color: var(--sage);
+}
+
+.option-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+}
+
+.option-copy strong {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.option-copy>span {
+    font-size: 11px;
+    color: var(--muted);
+}
+
+.option-action {
+    display: inline-flex;
+    align-items: center;
+    font-size: 10px;
+    color: var(--sage);
+}
+
+.option-action.is-available {
+    font-size: 24px;
+    font-weight: 300;
+}
+
+.picker-note {
+    margin-top: 25px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 10px;
+    color: var(--muted);
+}
+
+.duration-fields {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.duration-fields>label {
+    font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.number-field {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: #f8f8f1;
+    padding: 0 10px;
+}
+
+.number-field:focus-within {
+    border-color: var(--accent);
+}
+
+.number-field input {
+    background: transparent;
+    border: 0;
+    width: 100%;
+    font-size: 20px;
+    padding: 11px 0;
+}
+
+.number-field>span {
+    color: var(--muted);
+    font-size: 10px;
+}
+
+.number-field input:focus-visible {
+    outline-offset: 6px;
+}
+
+.settings-note {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding: 15px 12px;
+    margin-top: 22px;
+    background: #f0f2e8;
+    color: #657458;
+    border-radius: 8px;
+    font-size: 11px;
+    line-height: 1.9;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 9px;
+    border-top: 1px solid var(--line);
+    padding-top: 21px;
+    margin-top: 26px;
+}

@@ -1,0 +1,52 @@
+---
+import Icon from './Icon.astro';
+import WidgetShell from './WidgetShell.astro';
+import TimerSettings from './TimerSettings.astro';
+---
+
+<WidgetShell id="timer" title="Pomodoro" icon="timer">
+  <div class="timer-body">
+    <div class="timer-modes" role="group" aria-label="Timer mode">
+      <button type="button" data-mode="focus" aria-pressed="true">Focus</button>
+      <button type="button" data-mode="shortBreak" aria-pressed="false">Short break</button>
+      <button type="button" data-mode="longBreak" aria-pressed="false">Long break</button>
+    </div>
+
+    <div class="timer-clock">
+      <svg class="timer-ring" viewBox="0 0 300 300" aria-hidden="true">
+        <circle class="ring-track" cx="150" cy="150" r="139" />
+        <circle class="ring-progress" data-ring cx="150" cy="150" r="139" pathLength="100" />
+      </svg>
+      <div class="clock-face">
+        <span class="clock-eyebrow" data-clock-label>TIME TO FOCUS</span>
+        <span class="countdown" data-countdown role="timer" aria-label="Focus time remaining">25:00</span>
+        <span class="clock-caption" data-clock-caption>One thing at a time.</span>
+      </div>
+    </div>
+
+    <div class="timer-controls">
+      <button type="button" class="icon-button reset-button" data-reset aria-label="Reset timer" title="Reset timer">
+        <Icon name="reset" />
+      </button>
+      <button type="button" class="button button-primary start-button" data-toggle-timer>
+        <span data-start-icon><Icon name="play" size={17} /></span>
+        <span data-pause-icon hidden><Icon name="pause" size={17} /></span>
+        <span data-toggle-label>Start focus</span>
+      </button>
+      <button type="button" class="icon-button settings-button" data-open-settings aria-label="Timer settings" title="Timer settings">
+        <Icon name="settings" />
+      </button>
+    </div>
+    <p class="timer-feedback" data-timer-feedback role="status" hidden></p>
+  </div>
+
+  <footer class="timer-footer">
+    <div class="session-dots" aria-label="0 of 4 focus sessions completed" data-session-dots>
+      <i></i><i></i><i></i><i></i>
+    </div>
+    <span data-session-label>Session 1 of 4</span>
+    <span class="footer-divider"></span>
+    <span>Small steps, steady progress.</span>
+  </footer>
+</WidgetShell>
+<TimerSettings />

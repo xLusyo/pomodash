@@ -1,3 +1,19 @@
+# Project
+The project is called PomoDash, its a Pomodoro app that is simple, configurable, and collects no data. 
+
+## Functional
+- Pomodoro Timer
+- Dashboard
+- Drag and Drop
+- Spotify Integration
+- Configurable: All configs will live on localstorage in json format. 
+
+## Design
+- @docs/frontend/design-system.md
+
+## System Design
+- @docs/frontend/design-system.md
+
 ## Development
 
 When starting the dev server, use background mode:

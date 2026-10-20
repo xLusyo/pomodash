@@ -1,0 +1,41 @@
+---
+import Icon from './Icon.astro';
+import TimerWidget from './TimerWidget.astro';
+import TodoWidget from './TodoWidget.astro';
+import WidgetPicker from './WidgetPicker.astro';
+---
+
+<main class="workspace" aria-label="Widget canvas">
+  <h1 class="sr-only">PomoDash workspace</h1>
+  <p id="canvas-instructions" class="sr-only">
+    Drag a widget from any non-interactive surface. With a widget focused, use arrow keys to move it.
+    Hold Shift for larger steps. Press Escape to cancel a drag.
+  </p>
+  <p id="resize-instructions" class="sr-only">
+    Drag the bottom-right corner to resize. With the resize control focused, use arrow keys to change
+    width and height. Hold Shift for larger steps. Press Escape to cancel resizing.
+  </p>
+  <div class="widget-canvas" data-widget-canvas>
+    <TimerWidget />
+    <TodoWidget />
+    <div class="canvas-empty" data-canvas-empty hidden>
+      <p>A little space to make your own.</p>
+      <button type="button" class="text-button" data-open-picker>
+        Add your first widget<Icon name="plus" size={16} />
+      </button>
+    </div>
+  </div>
+</main>
+
+<button type="button" class="button button-dark canvas-add-button" data-open-picker>
+  <Icon name="plus" size={18} />Add widget
+</button>
+<div class="storage-notice" data-storage-notice role="status" hidden>
+  <Icon name="lock" size={18} />
+  <span data-notice-text></span>
+</div>
+<div class="sr-only" role="status" aria-live="polite" data-announcement></div>
+<noscript>
+  <p class="noscript-notice">Enable JavaScript to use the timer, widgets, and saved workspace.</p>
+</noscript>
+<WidgetPicker />

@@ -1,0 +1,39 @@
+---
+import Icon from './Icon.astro';
+---
+
+<dialog id="widget-picker" class="modal" aria-labelledby="picker-title">
+  <div class="modal-header">
+    <div>
+      <span class="eyebrow">A SPACE THAT FITS YOU</span>
+      <h2 id="picker-title">Add a widget</h2>
+    </div>
+    <button type="button" class="icon-button" data-close-dialog aria-label="Close widget picker">
+      <Icon name="close" />
+    </button>
+  </div>
+  <p class="modal-description">A few simple tools. Just what you need.</p>
+
+  <div class="widget-options">
+    <button type="button" class="widget-option" data-add-widget="timer">
+      <span class="option-icon"><Icon name="timer" size={24} /></span>
+      <span class="option-copy">
+        <strong>Pomodoro</strong>
+        <span>A little focus. A little breathing room.</span>
+      </span>
+      <span class="option-action" data-option-status><Icon name="plus" /></span>
+    </button>
+    <button type="button" class="widget-option" data-add-widget="todos">
+      <span class="option-icon sage"><Icon name="list" size={24} /></span>
+      <span class="option-copy">
+        <strong>To-do list</strong>
+        <span>Less on your mind. More in your day.</span>
+      </span>
+      <span class="option-action" data-option-status><Icon name="plus" /></span>
+    </button>
+  </div>
+
+  <p class="picker-note">
+    <Icon name="grip" size={16} />Drag widgets anywhere. Everything stays on this device.
+  </p>
+</dialog>

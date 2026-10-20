@@ -1,0 +1,67 @@
+---
+import Icon from './Icon.astro';
+import WidgetShell from './WidgetShell.astro';
+---
+
+<WidgetShell id="todos" title="To-do list" icon="list">
+  <span slot="badge" class="count-badge" data-todo-count>0</span>
+  <div class="todo-body">
+    <h3>A little clarity goes a long way.</h3>
+    <p class="todo-intro">Get it out of your head. Make room to focus.</p>
+    <form id="add-todo-form" class="add-todo-form">
+      <label class="sr-only" for="new-todo">New task</label>
+      <input
+        id="new-todo"
+        name="title"
+        placeholder="What needs doing?"
+        maxlength="200"
+        required
+        autocomplete="off"
+      />
+      <button type="submit" class="icon-button" aria-label="Add task" title="Add task">
+        <Icon name="plus" />
+      </button>
+    </form>
+    <div class="todo-empty" data-todo-empty>
+      <span class="empty-list-icon"><Icon name="check" size={25} /></span>
+      <p>A fresh start.</p>
+      <span>Add your first task above.<br />One small step is all it takes.</span>
+    </div>
+    <ul class="todo-list" data-todo-list aria-label="Tasks"></ul>
+  </div>
+  <footer class="todo-footer">
+    <span data-todo-progress>No tasks yet</span>
+    <span class="todo-progress-track"><span data-todo-progress-bar></span></span>
+  </footer>
+</WidgetShell>
+
+<template id="todo-item-template">
+  <li class="todo-item">
+    <label class="todo-toggle">
+      <input type="checkbox" />
+      <span class="todo-checkbox"><Icon name="check" size={13} /></span>
+      <span class="sr-only" data-checkbox-label></span>
+    </label>
+    <span class="todo-title"></span>
+    <div class="todo-item-actions">
+      <button type="button" class="icon-button" data-edit-todo title="Edit task">
+        <Icon name="edit" size={16} />
+      </button>
+      <button type="button" class="icon-button" data-delete-todo title="Delete task">
+        <Icon name="trash" size={16} />
+      </button>
+    </div>
+    <form class="edit-todo-form" hidden>
+      <label>
+        <span class="sr-only">Task title</span>
+        <input name="title" maxlength="200" required autocomplete="off" />
+      </label>
+      <button type="submit" class="icon-button" aria-label="Save task" title="Save task">
+        <Icon name="check" size={17} />
+      </button>
+      <button type="button" class="icon-button" data-cancel-edit aria-label="Cancel editing" title="Cancel">
+        <Icon name="close" size={17} />
+      </button>
+    </form>
+  </li>
+</template>

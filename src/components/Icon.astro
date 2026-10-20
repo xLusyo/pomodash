@@ -1,0 +1,23 @@
+---
+interface Props {
+  name: 'plus' | 'close' | 'grip' | 'left' | 'right' | 'timer' | 'list' | 'settings' | 'reset' | 'play' | 'pause' | 'check' | 'edit' | 'trash' | 'leaf' | 'sun' | 'arrow' | 'lock';
+  size?: number;
+}
+const { name, size = 20 } = Astro.props;
+const paths: Record<Props['name'], string> = {
+  plus: 'M12 5v14M5 12h14', close: 'm6 6 12 12M6 18 18 6',
+  grip: 'M9 5h.01M15 5h.01M9 12h.01M15 12h.01M9 19h.01M15 19h.01',
+  left: 'm14 6-6 6 6 6', right: 'm10 6 6 6-6 6',
+  timer: 'M9 2h6M12 7v5l3 2M18.5 5.5 20 4M21 13a9 9 0 1 1-18 0 9 9 0 0 1 18 0',
+  list: 'm4 6 1 1 2-2M10 6h10M4 12h3M10 12h10M4 18h3M10 18h10',
+  settings: 'M4 7h9M17 7h3M4 17h3M11 17h9M13 4v6M7 14v6',
+  reset: 'M3 10a9 9 0 1 1 1 8M3 4v6h6',
+  play: 'm9 5 10 7-10 7V5', pause: 'M9 5v14M15 5v14',
+  check: 'm5 12 4 4L19 6', edit: 'm15 5 4 4M4 20l4-1L20 7a2.8 2.8 0 0 0-4-4L4 15v5',
+  trash: 'M3 6h18M9 6V3h6v3M6 6l1 15h10l1-15M10 10v7M14 10v7',
+  leaf: 'M20 4C7 2 2 9 6 15s16 6 14-11ZM5 20 15 10',
+  sun: 'M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5 19 19M5 19l1.5-1.5M17.5 6.5 19 5M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0',
+  arrow: 'M5 12h14m-5-5 5 5-5 5', lock: 'M7 10V7a5 5 0 0 1 10 0v3M5 10h14v11H5V10M12 14v3',
+};
+---
+<svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width={name === 'grip' ? 3.5 : 1.7} stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={paths[name]} /></svg>

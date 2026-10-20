@@ -1,43 +1,45 @@
-# Astro Starter Kit: Minimal
+# PomoDash
+
+A private Pomodoro workspace for desktops and tablets from 768 CSS pixels. Add widgets to a full-page canvas, drag their surfaces to position them freely, and resize them from the bottom-right corner. Widget contents, positions, and dimensions stay in your browser's localStorage; no accounts, tracking, or backend.
+
+## Development
+
+Requires Node.js 22.22 or newer.
 
 ```sh
-npm create astro@latest -- --template minimal
+npm install
+npm run dev -- --background
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+The local app is available at `http://localhost:4321`. Manage the background server with:
 
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+```sh
+npm run dev -- status
+npm run dev -- logs
+npm run dev -- stop
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Verification
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+```sh
+npm test
+npm run build
+```
 
-Any static assets, like images, can be placed in the `public/` directory.
+Tests use Node's built-in test runner. The production build is written to `dist/`.
 
-## 🧞 Commands
+## Structure
 
-All commands are run from the root of the project, from a terminal:
+- `src/components`: focused Astro components and shared widget shell.
+- `src/lib`: typed state, timer/todo operations, canvas geometry, and storage validation.
+- `src/scripts`: feature controllers, DOM views, and dashboard orchestration.
+- `src/styles`: visual tokens and styles separated by feature.
+- `tests`: timer, todo, movement/resize constraints, and storage boundary tests.
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+## Documentation
 
-## 👀 Want to learn more?
+- [Task checklist and backlog](docs/todo.md)
+- [Design system](docs/frontend/design-system.md)
+- [System design and persistence](docs/system-design/system-design.md)
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Spotify, weather, mobile layouts, cloud sync, and multi-tab synchronization are deferred.
