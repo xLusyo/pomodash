@@ -12,41 +12,52 @@ import { ACCENT_PRESETS, FONT_PRESETS } from '../lib/appearance';
     <button type="button" class="icon-button" data-close-dialog aria-label="Close appearance settings"><Icon name="close" /></button>
   </div>
   <p id="appearance-description" class="modal-description">Make this space feel like yours. Preview changes, then save.</p>
+  <div class="appearance-tabs" role="tablist" aria-label="Appearance settings">
+    <button type="button" id="wallpaper-tab" role="tab" aria-selected="true" aria-controls="wallpaper-panel">Wallpaper</button>
+    <button type="button" id="fonts-tab" role="tab" aria-selected="false" aria-controls="fonts-panel" tabindex="-1">Fonts</button>
+    <button type="button" id="colors-tab" role="tab" aria-selected="false" aria-controls="colors-panel" tabindex="-1">Colors</button>
+  </div>
   <form id="appearance-form">
-    <fieldset class="appearance-section">
-      <legend>Wallpaper</legend>
-      <div class="wallpaper-preview" data-wallpaper-preview><span data-wallpaper-empty>A quiet, plain canvas</span></div>
-      <div class="wallpaper-actions">
-        <button type="button" class="button button-secondary" data-upload-wallpaper>Upload image</button>
-        <button type="button" class="text-button" data-remove-wallpaper>Remove wallpaper</button>
-        <input class="sr-only" type="file" accept="image/jpeg,image/png,image/webp" data-wallpaper-file tabindex="-1" aria-label="Choose wallpaper image" />
-      </div>
-      <p class="appearance-help">JPEG, PNG, or WebP, up to 10 MB. Images stay on this device.</p>
-    </fieldset>
-    <fieldset class="appearance-section">
-      <legend>Fonts</legend>
-      <div class="font-options">
-        {FONT_PRESETS.map(font => (
-          <label class="font-option" style={`--preview-font: ${font.body}; --preview-heading: ${font.heading}`}>
-            <input type="radio" name="fontPreset" value={font.id} />
-            <span><strong>{font.name}</strong><span class="font-description">{font.description}</span></span>
-            <span class="font-sample" aria-hidden="true">Aa</span>
-          </label>
-        ))}
-      </div>
-    </fieldset>
-    <fieldset class="appearance-section">
-      <legend>Colors</legend>
-      <div class="accent-options">
-        {ACCENT_PRESETS.map(accent => (
-          <label class="accent-option">
-            <input type="radio" name="accentPreset" value={accent.id} />
-            <span class="accent-swatch" style={`--swatch: ${accent.color}`} aria-hidden="true"></span>
-            <span>{accent.name}</span>
-          </label>
-        ))}
-      </div>
-    </fieldset>
+    <div id="wallpaper-panel" role="tabpanel" aria-labelledby="wallpaper-tab" tabindex="0" class="appearance-panel">
+      <fieldset class="appearance-section">
+        <legend>Wallpaper</legend>
+        <div class="wallpaper-preview" data-wallpaper-preview><span data-wallpaper-empty>A quiet, plain canvas</span></div>
+        <div class="wallpaper-actions">
+          <button type="button" class="button button-secondary" data-upload-wallpaper>Upload image</button>
+          <button type="button" class="text-button" data-remove-wallpaper>Remove wallpaper</button>
+          <input class="sr-only" type="file" accept="image/jpeg,image/png,image/webp" data-wallpaper-file tabindex="-1" aria-label="Choose wallpaper image" />
+        </div>
+        <p class="appearance-help">JPEG, PNG, or WebP, up to 10 MB. Images stay on this device.</p>
+      </fieldset>
+    </div>
+    <div id="fonts-panel" role="tabpanel" aria-labelledby="fonts-tab" tabindex="0" class="appearance-panel" hidden>
+      <fieldset class="appearance-section">
+        <legend>Fonts</legend>
+        <div class="font-options">
+          {FONT_PRESETS.map(font => (
+            <label class="font-option" style={`--preview-font: ${font.body}; --preview-heading: ${font.heading}`}>
+              <input type="radio" name="fontPreset" value={font.id} />
+              <span><strong>{font.name}</strong><span class="font-description">{font.description}</span></span>
+              <span class="font-sample" aria-hidden="true">Aa</span>
+            </label>
+          ))}
+        </div>
+      </fieldset>
+    </div>
+    <div id="colors-panel" role="tabpanel" aria-labelledby="colors-tab" tabindex="0" class="appearance-panel" hidden>
+      <fieldset class="appearance-section">
+        <legend>Colors</legend>
+        <div class="accent-options">
+          {ACCENT_PRESETS.map(accent => (
+            <label class="accent-option">
+              <input type="radio" name="accentPreset" value={accent.id} />
+              <span class="accent-swatch" style={`--swatch: ${accent.color}`} aria-hidden="true"></span>
+              <span>{accent.name}</span>
+            </label>
+          ))}
+        </div>
+      </fieldset>
+    </div>
     <p class="appearance-message" data-appearance-message role="status" aria-live="polite" hidden></p>
     <div class="appearance-reset"><button type="button" class="text-button" data-reset-appearance>Reset appearance</button></div>
     <div class="modal-footer">

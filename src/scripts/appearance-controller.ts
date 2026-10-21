@@ -3,6 +3,7 @@ import { loadAppearance, saveAppearance } from '../lib/appearance-storage.ts';
 import { applyAppearance } from './appearance-view';
 import { announce, getElement } from './dom';
 import { processWallpaper } from './wallpaper';
+import { initializeAppearanceTabs } from './appearance-tabs';
 
 export function initializeAppearance(storage: Storage | null): void {
   const loaded = loadAppearance(storage);
@@ -19,6 +20,7 @@ export function initializeAppearance(storage: Storage | null): void {
   const message = getElement<HTMLElement>('[data-appearance-message]');
   const uploadButton = getElement<HTMLButtonElement>('[data-upload-wallpaper]');
   let notice = loaded.notice;
+  initializeAppearanceTabs(dialog);
 
   function showMessage(text: string | null): void {
     message.textContent = text ?? '';

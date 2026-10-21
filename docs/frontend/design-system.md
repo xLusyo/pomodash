@@ -23,7 +23,7 @@ Use system fonts only: Avenir Next / Segoe UI for controls and text, Iowan Old S
 
 ## Appearance
 
-An icon-only Settings button sits beside Add widget in a floating bottom-right action group. It opens a centered native dialog with Wallpaper, Fonts, and Colors sections. Changes preview live; Save changes commits them. Cancel, Escape, close, and backdrop dismissal restore the saved appearance. Reset appearance previews the defaults until saved.
+An icon-only Settings button sits beside Add widget in a floating bottom-right action group. It opens a centered native dialog up to 800px wide with Wallpaper, Fonts, and Colors tabs. Tabs support Left/Right arrows, Home, and End, and retain draft choices when switching sections. Changes preview live; Save changes commits them. Cancel, Escape, close, and backdrop dismissal restore the saved appearance. Reset appearance previews the defaults until saved.
 
 Wallpaper accepts a local JPEG, PNG, or WebP up to 10 MB. Images cover the canvas, centered without repeating, and can be removed. Processing stays on-device and produces a resized image for local storage.
 
