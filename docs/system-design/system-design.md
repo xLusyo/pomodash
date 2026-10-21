@@ -28,6 +28,14 @@ Validate JSON shape, supported version, widget IDs, unique task IDs, nonblank ta
 
 No multi-tab synchronization or cloud synchronization is included. Concurrent tabs save independently; the last successful write is retained.
 
+## Appearance settings
+
+Appearance is independent from timer and widget persistence. `pomodash.appearance.v1` stores JSON with `version: 1`, nullable `wallpaper` data URL, `fontPreset` (`original`, `modern`, `bookish`), and `accentPreset` (`terracotta`, `sage`, `ocean`, `plum`, `slate`). Existing workspace data is unchanged. Timer ticks never serialize wallpaper data.
+
+The appearance controller owns saved settings and a dialog draft. Draft updates apply font/accent CSS variables and the canvas wallpaper immediately. Save writes the appearance key before committing the draft. Every other dismissal restores the saved settings. Failed writes retain the draft and keep the dialog open; unavailable storage permits an explicitly announced session-only save. Invalid appearance data falls back independently with a notice and is preserved until Save.
+
+Wallpaper processing decodes local JPEG, PNG, or WebP files up to 10 MB, scales to a maximum 1920px longest edge without upscaling, and encodes WebP. Quality and dimensions decrease as needed to fit a data URL under 1 million characters. Browser fallback PNG encoding is accepted. Object URLs are revoked after processing. Request identifiers discard stale results after replacement, reset, removal, or dialog dismissal.
+
 ## Canvas behavior
 
 - `widget-canvas` controls positioning, whole-surface dragging, visibility, and stacking. `widget-resize` separately controls corner resizing. Pure canvas helpers constrain coordinates and dimensions.

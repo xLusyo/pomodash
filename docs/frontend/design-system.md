@@ -21,6 +21,16 @@ A warm, quiet workspace for focus. Support desktop and tablets from 768 CSS pixe
 
 Use system fonts only: Avenir Next / Segoe UI for controls and text, Iowan Old Style / Georgia for editorial headings. No remote fonts or image requests.
 
+## Appearance
+
+An icon-only Settings button sits beside Add widget in a floating bottom-right action group. It opens a centered native dialog with Wallpaper, Fonts, and Colors sections. Changes preview live; Save changes commits them. Cancel, Escape, close, and backdrop dismissal restore the saved appearance. Reset appearance previews the defaults until saved.
+
+Wallpaper accepts a local JPEG, PNG, or WebP up to 10 MB. Images cover the canvas, centered without repeating, and can be removed. Processing stays on-device and produces a resized image for local storage.
+
+Font presets are Original (the default pairing), Modern (system UI throughout), and Bookish (Georgia/serif throughout). Body and heading font tokens apply across widgets and dialogs; countdown numerals remain tabular.
+
+Accent presets are Terracotta (`#b75c43`, default), Sage (`#526448`), Ocean (`#2f6475`), Plum (`#75516c`), and Slate (`#4b6075`). They control focus actions, highlights, focus rings, and the focus timer ring. Break and todo sage colors retain their semantic role. Surfaces and text retain the light palette.
+
 ## Components and interaction
 
 - Dashboard: full-page canvas, floating Add widget button, and a small prompt only when all widgets are hidden.

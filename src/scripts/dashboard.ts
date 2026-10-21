@@ -6,6 +6,7 @@ import { initializeTimer } from './timer-controller';
 import { initializeTodos } from './todo-controller';
 import { initializeWidgetCanvas } from './widget-canvas';
 import { initializeWidgetPicker } from './widget-picker';
+import { initializeAppearance } from './appearance-controller';
 
 function getBrowserStorage(): Storage | null {
   try {
@@ -27,6 +28,7 @@ export function initializeDashboard(): void {
   let state: DashboardState = loaded.state;
   showStorageNotice(loaded.notice);
   initializeDialogs();
+  initializeAppearance(storage);
 
   function setState(next: DashboardState): void {
     state = next;

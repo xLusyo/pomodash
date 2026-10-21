@@ -1,6 +1,10 @@
 .workspace {
   flex: 1;
   min-height: 100dvh;
+  background-image: var(--wallpaper);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .widget-canvas {
@@ -9,12 +13,24 @@
   isolation: isolate;
 }
 
-.canvas-add-button {
+.canvas-actions {
   position: fixed;
   right: 24px;
   bottom: 24px;
   z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.canvas-actions .button {
   box-shadow: 0 4px 16px #30362f20;
+}
+
+.canvas-settings-button {
+  width: 44px;
+  height: 44px;
+  padding: 0;
 }
 
 .canvas-empty {
@@ -28,7 +44,7 @@
 }
 
 .canvas-empty p {
-  font-family: 'Iowan Old Style', Georgia, serif;
+  font-family: var(--font-heading);
   font-size: 25px;
 }
 

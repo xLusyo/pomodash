@@ -1,0 +1,143 @@
+.appearance-modal {
+  width: min(560px, calc(100% - 32px));
+  max-height: calc(100dvh - 32px);
+  overflow: auto;
+}
+
+.appearance-section {
+  min-width: 0;
+  border: 0;
+  padding: 0;
+  margin: 0 0 24px;
+}
+
+.appearance-section legend {
+  padding: 0;
+  margin-bottom: 12px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.wallpaper-preview {
+  height: 110px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--background) center / cover no-repeat;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.wallpaper-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.appearance-help {
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.font-options {
+  display: grid;
+  gap: 8px;
+}
+
+.font-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  cursor: pointer;
+}
+
+.font-option:has(input:checked) {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.font-option input,
+.accent-option input {
+  accent-color: var(--accent);
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  margin: 0;
+}
+
+.font-option > span:first-of-type {
+  display: grid;
+  gap: 4px;
+  font-family: var(--preview-font);
+}
+
+.font-option strong {
+  font-size: 13px;
+}
+
+.font-option .font-description {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.font-sample {
+  margin-left: auto;
+  font-family: var(--preview-heading);
+  font-size: 26px;
+}
+
+.accent-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+}
+
+.accent-option {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  cursor: pointer;
+  font-size: 11px;
+}
+
+.accent-swatch {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--swatch);
+}
+
+.appearance-message {
+  background: var(--accent-soft);
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.appearance-reset {
+  margin-top: 8px;
+}
+
+.appearance-modal .modal-footer {
+  margin-top: 12px;
+}
+
+.appearance-modal button:disabled {
+  opacity: .5;
+}
+
+@media (pointer: coarse) {
+  .font-option {
+    min-height: 60px;
+  }
+}

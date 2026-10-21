@@ -3,6 +3,7 @@ import Icon from './Icon.astro';
 import TimerWidget from './TimerWidget.astro';
 import TodoWidget from './TodoWidget.astro';
 import WidgetPicker from './WidgetPicker.astro';
+import AppearanceSettings from './AppearanceSettings.astro';
 ---
 
 <main class="workspace" aria-label="Widget canvas">
@@ -27,9 +28,14 @@ import WidgetPicker from './WidgetPicker.astro';
   </div>
 </main>
 
-<button type="button" class="button button-dark canvas-add-button" data-open-picker>
-  <Icon name="plus" size={18} />Add widget
-</button>
+<div class="canvas-actions">
+  <button type="button" class="button button-dark canvas-settings-button" data-open-appearance aria-label="Open settings" title="Settings" aria-haspopup="dialog" aria-controls="appearance-settings">
+    <Icon name="settings" size={20} />
+  </button>
+  <button type="button" class="button button-dark canvas-add-button" data-open-picker>
+    <Icon name="plus" size={18} />Add widget
+  </button>
+</div>
 <div class="storage-notice" data-storage-notice role="status" hidden>
   <Icon name="lock" size={18} />
   <span data-notice-text></span>
@@ -39,3 +45,4 @@ import WidgetPicker from './WidgetPicker.astro';
   <p class="noscript-notice">Enable JavaScript to use the timer, widgets, and saved workspace.</p>
 </noscript>
 <WidgetPicker />
+<AppearanceSettings />

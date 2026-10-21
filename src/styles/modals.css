@@ -26,7 +26,7 @@
 }
 
 .modal-header h2 {
-    font-family: 'Iowan Old Style', Georgia, serif;
+    font-family: var(--font-heading);
     font-size: 30px;
     font-weight: 400;
     margin-top: 9px;

@@ -3,6 +3,7 @@
 @import url('./timer.css');
 @import url('./todos.css');
 @import url('./modals.css');
+@import url('./appearance.css');
 
 :root {
   color-scheme: light;
@@ -17,8 +18,11 @@
   --accent-soft: #f4e9e2;
   --sage: #65785b;
   --radius: 18px;
+  --font-body: 'Avenir Next', avenir, 'Segoe UI', sans-serif;
+  --font-heading: 'Iowan Old Style', georgia, serif;
+  --wallpaper: none;
 
-  font-family: 'Avenir Next', Avenir, 'Segoe UI', sans-serif;
+  font-family: var(--font-body);
   font-size: 14px;
   font-synthesis: none;
   -webkit-font-smoothing: antialiased;

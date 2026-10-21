@@ -14,7 +14,7 @@
 .todo-body h3 {
     font-size: 17px;
     font-weight: 500;
-    font-family: 'Iowan Old Style', Georgia, serif;
+    font-family: var(--font-heading);
     letter-spacing: -.15px;
 }
 
@@ -82,7 +82,7 @@
 
 .todo-empty p {
     font-size: 15px;
-    font-family: 'Iowan Old Style', Georgia, serif;
+    font-family: var(--font-heading);
 }
 
 .todo-empty>span:last-child {

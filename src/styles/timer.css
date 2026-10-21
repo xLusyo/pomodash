@@ -74,7 +74,7 @@
 }
 
 .ring-progress {
-    stroke: #b7765e;
+    stroke: var(--accent);
     stroke-dasharray: 100;
     stroke-dashoffset: 0;
     stroke-linecap: round;
@@ -101,7 +101,7 @@
     font-weight: 400;
     letter-spacing: -4px;
     font-variant-numeric: tabular-nums;
-    font-family: 'Avenir Next', 'Segoe UI', sans-serif;
+    font-family: var(--font-body);
 }
 
 .countdown.is-long {
@@ -109,7 +109,7 @@
 }
 
 .clock-caption {
-    font-family: 'Iowan Old Style', Georgia, serif;
+    font-family: var(--font-heading);
     font-size: 14px;
     font-style: italic;
     color: var(--muted);
@@ -176,7 +176,7 @@
 
 .session-dots i.is-current {
     box-shadow: 0 0 0 2px var(--accent-soft);
-    background: #bf8a70;
+    background: var(--accent);
 }
 
 .footer-divider {
