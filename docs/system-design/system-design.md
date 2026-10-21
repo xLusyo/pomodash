@@ -53,6 +53,14 @@ Wallpaper processing decodes local JPEG, PNG, or WebP files up to 10 MB, scales 
 - Mode switches and duration changes reset the current countdown and leave it idle. Duration settings accept whole minutes from 1 through 180.
 - Hiding the timer pauses it. Reloading a visible running timer restores its deadline and reconciles elapsed time.
 
+## Picture-in-picture timer
+
+The native Document Picture-in-Picture API opens a compact 320 × 340 window from a button click on supported browsers over HTTPS or localhost. There is no popup or video fallback. Unsupported browsers show an explanation; failed requests show an accessible retry message and log the error with context.
+
+The floating timer uses a separate Astro template, view, controller, and stylesheet. Both timer views use the dashboard's existing state and shared start/pause and reset callbacks. The existing 250ms deadline-based scheduler runs in the floating window while it is open and returns to the dashboard on closure. Expiration still completes once and leaves the next mode idle.
+
+Application styles are copied into the floating document with compact layout overrides. A root-style observer synchronizes font and accent changes, including draft previews and cancellation. Wallpaper is excluded. Closing the window releases its observer, listeners, and scheduler references without changing timer state. Hiding the timer closes the window and retains the normal pause behavior. An opening request that resolves after hiding is immediately closed. PiP state is never persisted; reload requires another button click, and closing the dashboard also closes its floating window.
+
 ## Verification
 
 Run `npm test` for timer, todo, canvas geometry, and persistence boundary tests with Node's built-in test runner. Run `npm run build` for production compilation. Browser checks cover native dialogs, CRUD, reload persistence, keyboard controls, free dragging, and corner resizing. Touch hardware validation remains distinct from desktop pointer checks.

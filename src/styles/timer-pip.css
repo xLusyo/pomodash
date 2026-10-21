@@ -1,0 +1,77 @@
+.pip-document body {
+    display: block;
+    min-height: 100vh;
+    background: var(--surface);
+}
+
+.pip-timer {
+    min-height: 100vh;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.pip-timer .timer-clock {
+    width: min(220px, 80vw, 65vh);
+    height: auto;
+    aspect-ratio: 1;
+    margin: 0;
+    container-type: inline-size;
+}
+
+.pip-timer .countdown {
+    font-size: 29cqi;
+    letter-spacing: -0.04em;
+}
+
+.pip-timer .countdown.is-long {
+    font-size: 24cqi;
+}
+
+.pip-timer .clock-eyebrow {
+    font-size: clamp(8px, 4cqi, 10px);
+    letter-spacing: 1px;
+}
+
+.pip-timer .clock-caption {
+    font-size: clamp(9px, 5cqi, 13px);
+}
+
+.pip-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.pip-controls .button {
+    min-width: 140px;
+}
+
+.pip-timer.is-break .ring-progress {
+    stroke: var(--sage);
+}
+
+.pip-feedback {
+    color: var(--sage);
+    font-size: 12px;
+    text-align: center;
+}
+
+.timer-pip-button {
+    margin-top: 12px;
+    font-size: 12px;
+}
+
+.timer-pip-notice {
+    max-width: 280px;
+    margin-top: 8px;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.5;
+    text-align: center;
+}

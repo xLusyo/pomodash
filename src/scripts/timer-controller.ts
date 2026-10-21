@@ -2,27 +2,31 @@ import { pauseTimer, reconcileTimer, resetTimer, startTimer, TIMER_MODES, update
 import type { TimerMode, TimerState } from '../lib/types.ts';
 import { getElement } from './dom';
 import { createTimerView } from './timer-view';
+import { initializeTimerPictureInPicture } from './timer-pip-controller';
 
 interface TimerOptions {
   read: () => TimerState;
   update: (timer: TimerState) => void;
+  isVisible: () => boolean;
 }
 
-export function initializeTimer({ read, update }: TimerOptions) {
+export function initializeTimer({ read, update, isVisible }: TimerOptions) {
   const widget = getElement<HTMLElement>('[data-widget="timer"]');
   const dialog = getElement<HTMLDialogElement>('#timer-settings');
   const form = getElement<HTMLFormElement>('#timer-settings-form');
   const view = createTimerView();
 
-  getElement<HTMLButtonElement>('[data-toggle-timer]', widget).addEventListener('click', () => {
+  function toggle(): void {
     const current = reconcileTimer(read(), Date.now());
     if (current !== read()) {
       update(current);
       return;
     }
     update(current.status === 'running' ? pauseTimer(current, Date.now()) : startTimer(current, Date.now()));
-  });
-  getElement<HTMLButtonElement>('[data-reset]', widget).addEventListener('click', () => update(resetTimer(read())));
+  }
+  const reset = () => update(resetTimer(read()));
+  getElement<HTMLButtonElement>('[data-toggle-timer]', widget).addEventListener('click', toggle);
+  getElement<HTMLButtonElement>('[data-reset]', widget).addEventListener('click', reset);
   widget.querySelectorAll<HTMLButtonElement>('[data-mode]').forEach(button => {
     button.addEventListener('click', () => update(resetTimer(read(), button.dataset.mode as TimerMode)));
   });
@@ -47,9 +51,24 @@ export function initializeTimer({ read, update }: TimerOptions) {
     const previous = read();
     const next = reconcileTimer(previous, Date.now());
     if (previous !== next) update(next);
-    view.render(read());
+    render();
   }
-  window.setInterval(tick, 250);
+  let schedulerWindow: Window = window;
+  let interval = schedulerWindow.setInterval(tick, 250);
+  const pictureInPicture = initializeTimerPictureInPicture({
+    read, isVisible, toggle, reset, refresh: tick,
+    useSchedulerWindow: target => {
+      schedulerWindow.clearInterval(interval);
+      schedulerWindow = target;
+      interval = schedulerWindow.setInterval(tick, 250);
+    },
+  });
+
+  function render(): void {
+    view.render(read());
+    pictureInPicture.render();
+  }
+
   document.addEventListener('visibilitychange', tick);
-  return { render: () => view.render(read()) };
+  return { render };
 }

@@ -2,6 +2,7 @@
 import Icon from './Icon.astro';
 import WidgetShell from './WidgetShell.astro';
 import TimerSettings from './TimerSettings.astro';
+import TimerPictureInPicture from './TimerPictureInPicture.astro';
 ---
 
 <WidgetShell id="timer" title="Pomodoro" icon="timer">
@@ -37,6 +38,11 @@ import TimerSettings from './TimerSettings.astro';
         <Icon name="settings" />
       </button>
     </div>
+    <button type="button" class="text-button timer-pip-button" data-toggle-pip aria-pressed="false" aria-describedby="timer-pip-notice">
+      <Icon name="pictureInPicture" size={17} />
+      <span data-pip-label>Picture in picture</span>
+    </button>
+    <p id="timer-pip-notice" class="timer-pip-notice" data-pip-notice role="status" hidden></p>
     <p class="timer-feedback" data-timer-feedback role="status" hidden></p>
   </div>
 
@@ -50,3 +56,4 @@ import TimerSettings from './TimerSettings.astro';
   </footer>
 </WidgetShell>
 <TimerSettings />
+<TimerPictureInPicture />

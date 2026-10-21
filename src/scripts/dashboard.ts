@@ -38,6 +38,7 @@ export function initializeDashboard(): void {
 
   const timer = initializeTimer({
     read: () => state.timer,
+    isVisible: () => state.widgets.includes('timer'),
     update: next => setState({ ...state, timer: next }),
   });
   const todos = initializeTodos({
