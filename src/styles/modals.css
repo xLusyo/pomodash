@@ -189,3 +189,82 @@
     padding-top: 21px;
     margin-top: 26px;
 }
+
+#timer-settings {
+    max-height: calc(100dvh - 32px);
+    overflow-y: auto;
+}
+
+.sound-settings {
+    min-width: 0;
+    border: 0;
+    padding: 0;
+    margin: 24px 0 0;
+}
+
+.sound-settings legend {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.sound-settings p {
+    font-size: 11px;
+    line-height: 1.7;
+    color: var(--muted);
+    margin: 8px 0;
+}
+
+.sound-choice {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin: 12px 0 18px;
+    font-size: 12px;
+}
+
+.sound-choice select {
+    flex: 1;
+    min-width: 100px;
+    padding: 10px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--surface);
+    color: var(--ink);
+    font: inherit;
+}
+
+.sound-choice select:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 4px;
+}
+
+.sound-upload {
+    display: block;
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+
+.sound-settings input[type="file"] {
+    max-width: 100%;
+    font: inherit;
+    font-size: 12px;
+}
+
+.sound-file-details {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    font-size: 11px;
+}
+
+.sound-file-details span {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.sound-settings .sound-message {
+    color: var(--accent);
+}

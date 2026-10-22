@@ -1,5 +1,6 @@
 ---
 import Icon from './Icon.astro';
+import { SOUND_PRESETS } from '../lib/timer-sound';
 ---
 
 <dialog id="timer-settings" class="modal" aria-labelledby="settings-title">
@@ -39,13 +40,33 @@ import Icon from './Icon.astro';
       </label>
     </div>
 
+    <fieldset class="sound-settings">
+      <legend>Completion sound</legend>
+      <p id="sound-help">Plays once when a focus or break ends.</p>
+      <div class="sound-choice">
+        <label for="timer-sound">Sound</label>
+        <select id="timer-sound" name="sound" data-timer-sound aria-describedby="sound-help">
+          {SOUND_PRESETS.map(sound => <option value={sound.id} disabled={sound.id === 'custom'}>{sound.label}</option>)}
+        </select>
+        <button type="button" class="button button-secondary" data-preview-sound aria-pressed="false">Preview sound</button>
+      </div>
+      <label class="sound-upload" for="sound-file">Upload custom audio</label>
+      <input id="sound-file" type="file" accept=".mp3,.wav,.ogg,audio/mpeg,audio/wav,audio/ogg" data-sound-file aria-describedby="sound-upload-help" />
+      <p id="sound-upload-help">MP3, WAV, or OGG, up to 1 MB. Only the first 10 seconds play. Saved on this device.</p>
+      <div class="sound-file-details">
+        <span data-sound-filename>No custom audio selected.</span>
+        <button type="button" class="text-button" data-remove-sound disabled>Remove audio</button>
+      </div>
+      <p class="sound-message" data-sound-message role="status" hidden></p>
+    </fieldset>
+
     <div class="settings-note">
       <Icon name="leaf" size={18} />
       <span>A long break follows every four focus sessions.<br />You choose when the next session starts.</span>
     </div>
     <div class="modal-footer">
       <button type="button" class="button button-secondary" data-close-dialog>Cancel</button>
-      <button type="submit" class="button button-primary">Save settings<Icon name="check" size={17} /></button>
+      <button type="submit" class="button button-primary" data-save-timer>Save settings<Icon name="check" size={17} /></button>
     </div>
   </form>
 </dialog>

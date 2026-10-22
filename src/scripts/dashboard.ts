@@ -37,6 +37,7 @@ export function initializeDashboard(): void {
   }
 
   const timer = initializeTimer({
+    storage,
     read: () => state.timer,
     isVisible: () => state.widgets.includes('timer'),
     update: next => setState({ ...state, timer: next }),

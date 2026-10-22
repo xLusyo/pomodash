@@ -1,6 +1,6 @@
 import { formatTime, MODE_LABELS, remainingTime } from '../lib/timer.ts';
 import type { TimerMode, TimerState } from '../lib/types.ts';
-import { getElement } from './dom';
+import { getElement } from './dom.ts';
 
 const captions: Record<TimerMode, string> = {
   focus: 'One thing at a time.', shortBreak: 'Take a little breathing room.', longBreak: 'You’ve earned a slower moment.',

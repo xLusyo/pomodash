@@ -1,28 +1,42 @@
 import { pauseTimer, reconcileTimer, resetTimer, startTimer, TIMER_MODES, updateDurations } from '../lib/timer.ts';
 import type { TimerMode, TimerState } from '../lib/types.ts';
-import { getElement } from './dom';
-import { createTimerView } from './timer-view';
-import { initializeTimerPictureInPicture } from './timer-pip-controller';
+import { getElement } from './dom.ts';
+import { createTimerView } from './timer-view.ts';
+import { initializeTimerPictureInPicture } from './timer-pip-controller.ts';
+import { initializeTimerSound } from './timer-sound-controller.ts';
+import type { SoundStorage } from '../lib/timer-sound-storage.ts';
 
 interface TimerOptions {
+  storage: SoundStorage | null;
   read: () => TimerState;
   update: (timer: TimerState) => void;
   isVisible: () => boolean;
 }
 
-export function initializeTimer({ read, update, isVisible }: TimerOptions) {
+export function initializeTimer({ storage, read, update, isVisible }: TimerOptions) {
   const widget = getElement<HTMLElement>('[data-widget="timer"]');
   const dialog = getElement<HTMLDialogElement>('#timer-settings');
   const form = getElement<HTMLFormElement>('#timer-settings-form');
   const view = createTimerView();
+  const sound = initializeTimerSound(storage);
+
+  function reconcile(now = Date.now()): TimerState {
+    const previous = read();
+    const next = reconcileTimer(previous, now);
+    if (previous !== next) {
+      update(next);
+      sound.complete();
+    }
+    return next;
+  }
 
   function toggle(): void {
-    const current = reconcileTimer(read(), Date.now());
-    if (current !== read()) {
-      update(current);
-      return;
-    }
-    update(current.status === 'running' ? pauseTimer(current, Date.now()) : startTimer(current, Date.now()));
+    sound.unlock();
+    const now = Date.now();
+    const previous = read();
+    const current = reconcile(now);
+    if (current !== previous) return;
+    update(current.status === 'running' ? pauseTimer(current, now) : startTimer(current, now));
   }
   const reset = () => update(resetTimer(read()));
   getElement<HTMLButtonElement>('[data-toggle-timer]', widget).addEventListener('click', toggle);
@@ -34,6 +48,7 @@ export function initializeTimer({ read, update, isVisible }: TimerOptions) {
     TIMER_MODES.forEach(mode => {
       getElement<HTMLInputElement>(`[name="${mode}"]`, form).value = String(read().durations[mode]);
     });
+    sound.open();
     dialog.showModal();
   });
   form.addEventListener('submit', event => {
@@ -43,14 +58,13 @@ export function initializeTimer({ read, update, isVisible }: TimerOptions) {
     const durations = {
       focus: Number(data.get('focus')), shortBreak: Number(data.get('shortBreak')), longBreak: Number(data.get('longBreak')),
     };
+    if (!sound.save()) return;
     update(updateDurations(read(), durations));
     dialog.close();
   });
 
   function tick(): void {
-    const previous = read();
-    const next = reconcileTimer(previous, Date.now());
-    if (previous !== next) update(next);
+    reconcile();
     render();
   }
   let schedulerWindow: Window = window;
