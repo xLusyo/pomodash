@@ -7,11 +7,15 @@
     flex: 1;
     min-height: 0;
     overflow: auto;
-    justify-content: center;
+    justify-content: safe center;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 24px 22px 26px;
+    padding: 24px 14px 26px;
+}
+
+.timer-body > * {
+    flex-shrink: 0;
 }
 
 .timer-modes {
@@ -27,7 +31,7 @@
     background: transparent;
     border: 0;
     border-radius: 6px;
-    padding: 8px 15px;
+    padding: 8px 11px;
     color: var(--muted);
     font-size: 11px;
     min-height: 32px;
@@ -47,8 +51,8 @@
 }
 
 .timer-clock {
-    width: 260px;
-    height: 260px;
+    width: min(260px, 100%);
+    aspect-ratio: 1;
     margin: 23px 0;
     position: relative;
     display: grid;
@@ -85,6 +89,8 @@
     flex-direction: column;
     align-items: center;
     position: relative;
+    width: 80%;
+    text-align: center;
 }
 
 .clock-eyebrow {
@@ -194,14 +200,6 @@
 }
 
 @media (width <=1000px) {
-    .timer-body {
-        padding-inline: 14px;
-    }
-
-    .timer-modes button {
-        padding-inline: 11px;
-    }
-
     .timer-footer {
         padding-inline: 16px;
     }
