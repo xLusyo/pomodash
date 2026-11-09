@@ -1,15 +1,19 @@
 import { createAppearance, type AppearanceSettings } from '../lib/appearance.ts';
-import { loadAppearance, saveAppearance } from '../lib/appearance-storage.ts';
-import { applyAppearance } from './appearance-view';
-import { announce, getElement } from './dom';
-import { processWallpaper } from './wallpaper';
-import { initializeAppearanceTabs } from './appearance-tabs';
+import { loadAppearance } from '../lib/appearance-storage.ts';
+import { saveSettings } from '../lib/settings-storage.ts';
+import { applyAppearance } from './appearance-view.ts';
+import { announce, getElement } from './dom.ts';
+import { processWallpaper } from './wallpaper.ts';
+import { initializeAppearanceTabs } from './appearance-tabs.ts';
+import { initializeTimerSound } from './timer-sound-controller.ts';
 
-export function initializeAppearance(storage: Storage | null): void {
+export function initializeSettings(storage: Storage | null) {
   const loaded = loadAppearance(storage);
   let saved = loaded.settings;
   let draft: AppearanceSettings = { ...saved };
   let uploadRequest = 0;
+  let isPreparingWallpaper = false;
+  let isPreparingSound = false;
   const dialog = getElement<HTMLDialogElement>('#appearance-settings');
   const form = getElement<HTMLFormElement>('#appearance-form');
   const trigger = getElement<HTMLButtonElement>('[data-open-appearance]');
@@ -20,7 +24,15 @@ export function initializeAppearance(storage: Storage | null): void {
   const message = getElement<HTMLElement>('[data-appearance-message]');
   const uploadButton = getElement<HTMLButtonElement>('[data-upload-wallpaper]');
   let notice = loaded.notice;
+  const sound = initializeTimerSound(storage, isPreparing => {
+    isPreparingSound = isPreparing;
+    updateSaveButton();
+  });
   initializeAppearanceTabs(dialog);
+
+  function updateSaveButton(): void {
+    saveButton.disabled = isPreparingWallpaper || isPreparingSound;
+  }
 
   function showMessage(text: string | null): void {
     message.textContent = text ?? '';
@@ -41,7 +53,8 @@ export function initializeAppearance(storage: Storage | null): void {
 
   function cancelUpload(): void {
     uploadRequest++;
-    saveButton.disabled = false;
+    isPreparingWallpaper = false;
+    updateSaveButton();
     uploadButton.textContent = 'Upload image';
     fileInput.value = '';
   }
@@ -54,6 +67,7 @@ export function initializeAppearance(storage: Storage | null): void {
     cancelUpload();
     renderDraft();
     showMessage(notice);
+    sound.open();
     dialog.showModal();
   });
   dialog.addEventListener('close', () => {
@@ -73,7 +87,8 @@ export function initializeAppearance(storage: Storage | null): void {
     const file = fileInput.files?.[0];
     if (!file) return;
     const request = ++uploadRequest;
-    saveButton.disabled = true;
+    isPreparingWallpaper = true;
+    updateSaveButton();
     uploadButton.textContent = 'Choose another image';
     showMessage('Preparing your wallpaper…');
     try {
@@ -88,7 +103,8 @@ export function initializeAppearance(storage: Storage | null): void {
       showMessage(error instanceof Error ? error.message : 'Wallpaper could not be prepared. Choose another image.');
     } finally {
       if (request === uploadRequest) {
-        saveButton.disabled = false;
+        isPreparingWallpaper = false;
+        updateSaveButton();
         uploadButton.textContent = 'Upload image';
         fileInput.value = '';
       }
@@ -109,14 +125,16 @@ export function initializeAppearance(storage: Storage | null): void {
   form.addEventListener('submit', event => {
     event.preventDefault();
     if (saveButton.disabled) return;
-    const error = saveAppearance(storage, draft);
+    const error = saveSettings(storage, draft, sound.getDraft());
     if (error) {
       showMessage(error);
       return;
     }
     saved = { ...draft };
-    notice = storage ? null : 'Appearance saved for this tab only. Browser storage is unavailable.';
-    announce(notice ?? 'Appearance saved.');
+    sound.commit();
+    notice = storage ? null : 'Settings saved for this tab only. Browser storage is unavailable.';
+    announce(notice ?? 'Settings saved.');
     dialog.close();
   });
+  return sound;
 }

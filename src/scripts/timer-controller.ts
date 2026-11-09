@@ -3,22 +3,20 @@ import type { TimerMode, TimerState } from '../lib/types.ts';
 import { getElement } from './dom.ts';
 import { createTimerView } from './timer-view.ts';
 import { initializeTimerPictureInPicture } from './timer-pip-controller.ts';
-import { initializeTimerSound } from './timer-sound-controller.ts';
-import type { SoundStorage } from '../lib/timer-sound-storage.ts';
+import type { TimerSoundController } from './timer-sound-controller.ts';
 
 interface TimerOptions {
-  storage: SoundStorage | null;
+  sound: Pick<TimerSoundController, 'unlock' | 'complete'>;
   read: () => TimerState;
   update: (timer: TimerState) => void;
   isVisible: () => boolean;
 }
 
-export function initializeTimer({ storage, read, update, isVisible }: TimerOptions) {
+export function initializeTimer({ sound, read, update, isVisible }: TimerOptions) {
   const widget = getElement<HTMLElement>('[data-widget="timer"]');
   const dialog = getElement<HTMLDialogElement>('#timer-settings');
   const form = getElement<HTMLFormElement>('#timer-settings-form');
   const view = createTimerView();
-  const sound = initializeTimerSound(storage);
 
   function reconcile(now = Date.now()): TimerState {
     const previous = read();
@@ -48,8 +46,10 @@ export function initializeTimer({ storage, read, update, isVisible }: TimerOptio
     TIMER_MODES.forEach(mode => {
       getElement<HTMLInputElement>(`[name="${mode}"]`, form).value = String(read().durations[mode]);
     });
-    sound.open();
     dialog.showModal();
+  });
+  dialog.addEventListener('close', () => {
+    getElement<HTMLButtonElement>('[data-open-settings]', widget).focus();
   });
   form.addEventListener('submit', event => {
     event.preventDefault();
@@ -58,7 +58,6 @@ export function initializeTimer({ storage, read, update, isVisible }: TimerOptio
     const durations = {
       focus: Number(data.get('focus')), shortBreak: Number(data.get('shortBreak')), longBreak: Number(data.get('longBreak')),
     };
-    if (!sound.save()) return;
     update(updateDurations(read(), durations));
     dialog.close();
   });

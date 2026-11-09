@@ -6,6 +6,7 @@
 
 .appearance-tabs {
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
   border-bottom: 1px solid var(--line);
   padding-bottom: 12px;
@@ -35,6 +36,10 @@
 
 .appearance-panel {
   min-height: 280px;
+}
+
+.appearance-panel .sound-settings {
+  margin: 0;
 }
 
 .appearance-section {

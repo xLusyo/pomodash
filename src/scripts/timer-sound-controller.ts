@@ -1,9 +1,9 @@
 import type { TimerSoundSettings } from '../lib/timer-sound.ts';
-import { loadTimerSound, saveTimerSound, type SoundStorage } from '../lib/timer-sound-storage.ts';
+import { loadTimerSound, type SoundStorage } from '../lib/timer-sound-storage.ts';
 import { announce, getElement } from './dom.ts';
 import { createTimerAudio } from './timer-audio.ts';
 
-export function initializeTimerSound(storage: SoundStorage | null) {
+export function initializeTimerSound(storage: SoundStorage | null, onPreparingChange = (_isPreparing: boolean) => {}) {
   const loaded = loadTimerSound(storage);
   let saved = loaded.settings;
   let draft: TimerSoundSettings = { ...saved };
@@ -12,13 +12,12 @@ export function initializeTimerSound(storage: SoundStorage | null) {
   let isPreviewing = false;
   let previewRequest = 0;
   const audio = createTimerAudio();
-  const dialog = getElement<HTMLDialogElement>('#timer-settings');
+  const dialog = getElement<HTMLDialogElement>('#appearance-settings');
   const select = getElement<HTMLSelectElement>('[data-timer-sound]');
   const file = getElement<HTMLInputElement>('[data-sound-file]');
   const filename = getElement<HTMLElement>('[data-sound-filename]');
   const preview = getElement<HTMLButtonElement>('[data-preview-sound]');
   const remove = getElement<HTMLButtonElement>('[data-remove-sound]');
-  const saveButton = getElement<HTMLButtonElement>('[data-save-timer]');
   const message = getElement<HTMLElement>('[data-sound-message]');
   const playbackNotice = getElement<HTMLElement>('[data-sound-notice]');
 
@@ -29,7 +28,7 @@ export function initializeTimerSound(storage: SoundStorage | null) {
 
   function showPlaybackError(error: unknown): void {
     console.error('PomoDash could not play the timer sound.', error);
-    const text = 'Sound could not play. Try Preview in Timer settings and check your browser’s audio permissions.';
+    const text = 'Sound could not play. Try Preview in Settings → Sounds and check your browser’s audio permissions.';
     playbackNotice.textContent = text;
     playbackNotice.hidden = false;
     if (dialog.open) showMessage(text);
@@ -43,7 +42,11 @@ export function initializeTimerSound(storage: SoundStorage | null) {
     preview.disabled = draft.selected === 'off' || isPreparing;
     preview.textContent = isPreviewing ? 'Stop preview' : 'Preview sound';
     preview.setAttribute('aria-pressed', String(isPreviewing));
-    saveButton.disabled = isPreparing;
+  }
+
+  function setPreparing(value: boolean): void {
+    isPreparing = value;
+    onPreparingChange(value);
   }
 
   function stopPreview(): void {
@@ -55,7 +58,7 @@ export function initializeTimerSound(storage: SoundStorage | null) {
 
   function cancelUpload(): void {
     uploadRequest++;
-    isPreparing = false;
+    setPreparing(false);
     file.value = '';
   }
 
@@ -72,7 +75,6 @@ export function initializeTimerSound(storage: SoundStorage | null) {
     stopPreview();
     draft = { ...saved };
     render();
-    getElement<HTMLButtonElement>('[data-open-settings]').focus();
   });
   select.addEventListener('change', () => {
     const selected = select.value as TimerSoundSettings['selected'];
@@ -85,7 +87,7 @@ export function initializeTimerSound(storage: SoundStorage | null) {
     if (!selected) return;
     stopPreview();
     const request = ++uploadRequest;
-    isPreparing = true;
+    setPreparing(true);
     render();
     showMessage('Preparing your sound…');
     try {
@@ -98,7 +100,7 @@ export function initializeTimerSound(storage: SoundStorage | null) {
       if (request === uploadRequest && dialog.open) showMessage(error instanceof Error ? error.message : 'Could not read the audio file.');
     } finally {
       if (request === uploadRequest) {
-        isPreparing = false;
+        setPreparing(false);
         file.value = '';
         render();
       }
@@ -131,14 +133,9 @@ export function initializeTimerSound(storage: SoundStorage | null) {
     });
   });
 
-  function save(): boolean {
-    if (isPreparing) return false;
-    const error = saveTimerSound(storage, draft);
-    if (error) { showMessage(error); return false; }
+  function commit(): void {
     saved = { ...draft };
     loaded.notice = storage ? null : 'Sound saved for this tab only. Browser storage is unavailable.';
-    announce(loaded.notice ?? 'Timer settings saved.');
-    return true;
   }
 
   function unlock(): void {
@@ -154,5 +151,7 @@ export function initializeTimerSound(storage: SoundStorage | null) {
   }
 
   if (loaded.notice) announce(loaded.notice);
-  return { open, save, unlock, complete };
+  return { open, commit, getDraft: () => draft, unlock, complete };
 }
+
+export type TimerSoundController = ReturnType<typeof initializeTimerSound>;

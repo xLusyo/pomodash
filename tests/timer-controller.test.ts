@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
+import { initializeTimerSound } from '../src/scripts/timer-sound-controller.ts';
 import { initializeTimer } from '../src/scripts/timer-controller.ts';
 import { createTimer, reconcileTimer, resetTimer, startTimer } from '../src/lib/timer.ts';
 import type { TimerMode } from '../src/lib/types.ts';
@@ -13,7 +14,7 @@ for (const mode of ['focus', 'shortBreak', 'longBreak'] as TimerMode[]) {
     let now = 1000;
     t.mock.method(Date, 'now', () => now);
     let timer = resetTimer(createTimer(), mode);
-    const controller = initializeTimer({ storage: null, read: () => timer, update: next => { timer = next; }, isVisible: () => true });
+    const controller = initializeTimer({ sound: initializeTimerSound(null), read: () => timer, update: next => { timer = next; }, isVisible: () => true });
     controller.render();
     dom.element('[data-toggle-timer]').click();
     now = timer.endsAt!;
@@ -32,7 +33,7 @@ test('pause, reset, mode switches, restored completion, and renders stay silent'
   const audio = mockTimerAudio(t);
   const now = Date.now();
   let timer = startTimer(createTimer(), now);
-  const controller = initializeTimer({ storage: null, read: () => timer, update: next => { timer = next; }, isVisible: () => true });
+  const controller = initializeTimer({ sound: initializeTimerSound(null), read: () => timer, update: next => { timer = next; }, isVisible: () => true });
   controller.render();
   dom.element('[data-toggle-timer]').click();
   dom.element('[data-reset]').click();
@@ -49,7 +50,7 @@ test('a toggle at the deadline completes the existing session without starting a
   const audio = mockTimerAudio(t);
   let timer = startTimer(createTimer(), 1);
   t.mock.method(Date, 'now', () => timer.endsAt ?? 1_500_001);
-  initializeTimer({ storage: null, read: () => timer, update: next => { timer = next; }, isVisible: () => true });
+  initializeTimer({ sound: initializeTimerSound(null), read: () => timer, update: next => { timer = next; }, isVisible: () => true });
   dom.element('[data-toggle-timer]').click();
   dom.tick();
   await settleAudio();

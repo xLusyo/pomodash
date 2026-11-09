@@ -17,6 +17,7 @@ export class TimerElement extends EventTarget {
   querySelector(selector: string) { return this.elements.get(selector) ?? null; }
   querySelectorAll(selector: string) { return selector === '[data-mode]' ? this.modes : []; }
   setAttribute(name: string, value: string) { this.attributes.set(name, value); }
+  getAttribute(name: string) { return this.attributes.get(name) ?? null; }
   focus() {}
   append() {}
   importNode() { return {}; }
@@ -32,7 +33,7 @@ export function mockTimerDom(t: TestContext) {
     title: '', documentElement: new TimerElement(), head: new TimerElement(), body: new TimerElement(),
   });
   const selectors = [
-    '[data-widget="timer"]', '#timer-settings', '#timer-settings-form', '[data-timer-sound]', '[data-sound-file]',
+    '[data-widget="timer"]', '#timer-settings', '#timer-settings-form', '#appearance-settings', '[data-timer-sound]', '[data-sound-file]',
     '[data-sound-filename]', '[data-preview-sound]', '[data-remove-sound]', '[data-save-timer]', '[data-sound-message]',
     '[data-sound-notice]', '[data-open-settings]', '[data-announcement]', 'option[value="custom"]',
     '[data-countdown]', '[data-clock-label]', '[data-clock-caption]', '[data-ring]', '[data-toggle-label]',

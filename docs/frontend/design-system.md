@@ -21,9 +21,9 @@ A warm, quiet workspace for focus. Support desktop and tablets from 768 CSS pixe
 
 Use system fonts only: Avenir Next / Segoe UI for controls and text, Iowan Old Style / Georgia for editorial headings. No remote fonts or image requests.
 
-## Appearance
+## Settings
 
-An icon-only Settings button sits beside Add widget in a floating bottom-right action group. It opens a centered native dialog up to 800px wide with Wallpaper, Fonts, and Colors tabs. Tabs support Left/Right arrows, Home, and End, and retain draft choices when switching sections. Changes preview live; Save changes commits them. Cancel, Escape, close, and backdrop dismissal restore the saved appearance. Reset appearance previews the defaults until saved.
+An icon-only Settings button sits beside Add widget in a floating bottom-right action group. It opens a centered native dialog up to 800px wide with Wallpaper, Fonts, Colors, and Sounds tabs. Tabs support Left/Right arrows, Home, and End, and retain draft choices when switching sections. Changes preview live; Save changes commits them. Cancel, Escape, close, and backdrop dismissal restore the saved appearance. Reset appearance previews the appearance defaults until saved and leaves the sound choice unchanged. The shared Save changes button commits appearance and sound choices together without resetting the timer. Saving is disabled while either upload is processing.
 
 Wallpaper accepts a local JPEG, PNG, or WebP up to 10 MB. Images cover the canvas, centered without repeating, and can be removed. Processing stays on-device and produces a resized image for local storage.
 
@@ -36,7 +36,8 @@ Accent presets are Terracotta (`#b75c43`, default), Sage (`#526448`), Ocean (`#2
 - Dashboard: full-page canvas, floating Add widget button, and a small prompt only when all widgets are hidden.
 - Widget shell: consistent title, icon, hide action, and a bottom-right resize handle. Drag any non-interactive surface to move the widget freely; controls retain their normal behavior.
 - Timer: segmented mode controls, progress ring, tabular countdown, start/pause, reset, settings, and four-session indicator.
-- Timer settings: duration controls and a completion sound selector with Chime (default), Bell, Digital, Custom, and Off. Preview/Stop plays the draft sound. Custom MP3, WAV, or OGG audio up to 1 MB stays on-device; only its first 10 seconds play, once per completed focus or break. Uploads can be replaced or removed. Save commits settings and resets the current session; Cancel, Escape, close, and backdrop dismissal discard drafts. Sound preferences persist independently in local storage.
+- Timer settings: duration controls; Save commits settings and resets the current session. Cancel, Escape, close, and backdrop dismissal discard drafts.
+- Settings → Sounds: a completion sound selector with Chime (default), Bell, Digital, Custom, and Off. Preview/Stop plays the draft sound. Custom MP3, WAV, or OGG audio up to 1 MB stays on-device; only its first 10 seconds play, once per completed focus or break. Uploads can be replaced or removed. The main Settings dialog’s Save changes button commits the sound; Cancel, Escape, close, and backdrop dismissal discard drafts and stop previews. Sound preferences retain their existing independent local storage key.
 - Picture in picture: a labeled button below the timer controls opens a compact floating countdown, mode, progress ring, start/pause, and reset. The dashboard timer remains visible and synchronized. The button closes the floating window when active. Unsupported browsers show a disabled button and an explanation. The floating view follows font and accent previews, uses a plain surface, and supports resizing and keyboard navigation.
 - Todos: task entry, completion checkbox, inline editing, deletion, and completion progress. Titles support up to 200 characters.
 - Native dialogs: focus containment, Escape dismissal, close controls, backdrop dismissal, and restored trigger focus.
